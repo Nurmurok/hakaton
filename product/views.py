@@ -9,7 +9,7 @@ from rest_framework.response import Response
 
 from .models import Product, Category,Cart
 from rest_framework.views import APIView
-from .serializers import ProductSerializer, CategorySerializer, CartSerializer
+from .serializers import ProductSerializer, CategorySerializer, CartSerializer,UpdateSerializer
 from rest_framework import permissions, status, pagination, viewsets, generics, filters
 from django.core.paginator import Paginator
 
@@ -68,3 +68,24 @@ class GetCartAPIView(APIView):
 #             serializer.save()
 #             return Response(serializer.data)
 #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+class CartUpdateApiView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def get_object(self, id):
+        try:
+            return Cart.objects.get(id=id)
+        except Cart.DoesNotExist:
+            raise Http404
+
+    def put(self, requests,id):
+        cart = self.get_object(id)
+        serializer = UpdateSerializer(cart, data=requests.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

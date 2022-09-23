@@ -4,6 +4,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+from product.models import Cart
 from .models import Account
 
 
@@ -48,3 +49,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         return attrs
 
 
+class UpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =Cart
+        fields = ['user', 'product']

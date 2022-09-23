@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 
 from product.models import Cart
 from .models import Account
-from .serializers import RegisterSerializer
+from .serializers import RegisterSerializer, UpdateSerializer
 
 
 
@@ -41,3 +41,5 @@ class RegisterAPIView(APIView):
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
