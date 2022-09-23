@@ -49,43 +49,15 @@ class GetCartAPIView(APIView):
         serializer=CartSerializer(cart)
         data=serializer.data
         data['product']=serializer2.data
-
         return Response(data)
 
-# class UpdateCart(APIView):
-#     permission_classes = [permissions.AllowAny]
-#
-#     def get_object(self, id):
-#         try:
-#             return Product.objects.get(id=id)
-#         except Product.DoesNotExist:
-#             raise Http404
-#
-#     def put(self, requests, id):
-#         product = self.get_object(id)
-#         serializer = ProductSerializer(product, data=requests.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
-
-class CartUpdateApiView(APIView):
-    permission_classes = [permissions.AllowAny]
-
-    def get_object(self, id):
-        try:
-            return Cart.objects.get(id=id)
-        except Cart.DoesNotExist:
-            raise Http404
-
-    def put(self, requests,id):
+    def put(self, requests, id):
         cart = self.get_object(id)
         serializer = UpdateSerializer(cart, data=requests.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
