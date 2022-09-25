@@ -37,6 +37,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         required=True,
     )
 
+
     class Meta:
         model = Account
         fields = ['email', 'username', 'first_name', 'second_name', 'phone', 'is_vendor', 'password', 'password2']

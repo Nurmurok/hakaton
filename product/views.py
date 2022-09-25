@@ -1,17 +1,12 @@
-from django.contrib.auth.models import User
 from django.db.migrations import serializer
-from django.http import Http404
-
 from rest_framework.parsers import JSONParser
-from django.db.models import Q
 from rest_framework.response import Response
-
-
-from .models import Product, Category,Cart
+from .models import Product, Cart
 from rest_framework.views import APIView
-from .serializers import ProductSerializer, CategorySerializer, CartSerializer,UpdateSerializer
-from rest_framework import permissions, status, pagination, viewsets, generics, filters
-from django.core.paginator import Paginator
+from .serializers import ProductSerializer, CartSerializer,UpdateSerializer
+from rest_framework import permissions, status
+# from account.permissions import IsVendor
+
 
 class ProductListApiView(APIView):
     permission_classes = [permissions.AllowAny]
@@ -21,22 +16,15 @@ class ProductListApiView(APIView):
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
+
 class ProductCreateAPIView(APIView):
     permission_classes = [permissions.AllowAny]
+
     def post(self,request):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# class CartCreateAPIView(APIView):
-#     permission_classes = [permissions.AllowAny]
-#     def post(self,request):
-#         serializer=CartSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class GetCartAPIView(APIView):

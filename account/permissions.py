@@ -1,6 +1,8 @@
 from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated
 
+from account.models import Account
+
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
@@ -15,3 +17,13 @@ class AnonPermissionOnly(permissions.BasePermission):
     def has_permission(self, request, view):
 
         return not request.user.is_authenticated
+
+
+
+# class IsVendor(IsAuthenticated):
+#     def has_permission(self, request, view):
+#         is_authenticated = super().has_permission(request, view)
+#         user = Account.objects.get(user=request.user)
+#         if not is_authenticated:
+#             return False
+#         return user.is_vendor

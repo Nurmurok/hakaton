@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-kvlfp@l48c05ga$6@@4#2gejtzpvc-s2ny%f10-7d!g6^rn*zs
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://marketplasemurok.herokuapp.com/','localhost', '127.0.0.1']
 
 
 # Application definition
