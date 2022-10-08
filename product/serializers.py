@@ -7,8 +7,12 @@ from .models import Product, Category, Cart
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id', 'category', 'name','description', 'price', 'quantity', 'created_date']
+        fields = ['id','user', 'category', 'name','description', 'price', 'quantity', 'created_date']
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'name']
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:

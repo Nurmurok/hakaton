@@ -1,9 +1,11 @@
-from django.db.migrations import serializer
+
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
-from .models import Product, Cart
+
+from account.permissions import IsVendor
+from .models import Product, Cart, Category
 from rest_framework.views import APIView
-from .serializers import ProductSerializer, CartSerializer,UpdateSerializer
+from .serializers import ProductSerializer, CartSerializer,UpdateSerializer, CategorySerializer
 from rest_framework import permissions, status
 # from account.permissions import IsVendor
 
@@ -17,14 +19,23 @@ class ProductListApiView(APIView):
         return Response(serializer.data)
 
 
-class ProductCreateAPIView(APIView):
+class CategoryListApiView(APIView):
     permission_classes = [permissions.AllowAny]
 
-    def post(self,request):
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get(self,request):
+        category=Category.objects.all()
+        serializer = CategorySerializer(category, many=True)
+        return Response(serializer.data)
+
+class ProductCreateAPIView(APIView):
+    permission_classes = [IsVendor]
+    # permission_classes = [permissions.AllowAny]
+    def post(self, request):
+        serializers = ProductSerializer(data=request.data)
+        if serializers.is_valid():
+           serializers.save()
+           return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class GetCartAPIView(APIView):
@@ -49,3 +60,13 @@ class GetCartAPIView(APIView):
 
 
 
+
+class CategoryCreateApiView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        serializers = CategorySerializer(data=request.data)
+        if serializers.is_valid():
+           serializers.save()
+           return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)

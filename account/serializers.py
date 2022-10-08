@@ -19,6 +19,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class RegisterSerializer(serializers.ModelSerializer):
+
     username = serializers.CharField(
         write_only=True,
         required=True
@@ -36,6 +37,11 @@ class RegisterSerializer(serializers.ModelSerializer):
         write_only=True,
         required=True,
     )
+    is_vendor = serializers.ChoiceField(
+        choices=((True, "vendor"),
+                 (False, "customer"))
+    )
+
 
 
     class Meta:

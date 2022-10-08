@@ -10,8 +10,8 @@ class Category(models.Model):
         return f"{self.name}"
 
 class Product(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=False, blank=False)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE,null=False, blank=False)
     name = models.CharField(max_length=255, null=False, blank=False)
     price = models.IntegerField( null=False, blank=False)
     description = models.CharField(max_length=255, null=False, blank=False)

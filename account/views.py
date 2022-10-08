@@ -5,17 +5,23 @@ from rest_framework import status, serializers
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from product.models import Cart
 from .models import Account
-from .serializers import RegisterSerializer, UpdateSerializer
+from .permissions import AnonPermissionOnly
+from .serializers import RegisterSerializer, UpdateSerializer, MyTokenObtainPairSerializer
 
+
+class MyObtainPairView(TokenObtainPairView):
+    permission_classes = (AnonPermissionOnly,)
+    serializer_class = MyTokenObtainPairSerializer
 
 
 class RegisterAPIView(APIView):
     permission_classes = [permissions.AllowAny]
-    parser_classes = [JSONParser]
-
+    # parser_classes = [JSONParser]
+    serializer_class = RegisterSerializer
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
@@ -29,7 +35,8 @@ class RegisterAPIView(APIView):
                 user=user,
                 first_name=request.data['first_name'],
                 second_name=request.data['second_name'],
-                phone=request.data['phone']
+                phone=request.data['phone'],
+                is_vendor=request.data['is_vendor']
 
             )
             account.save()

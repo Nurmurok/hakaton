@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-kvlfp@l48c05ga$6@@4#2gejtzpvc-s2ny%f10-7d!g6^rn*zs'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = ['https://marketplasemurok.herokuapp.com/','localhost', '127.0.0.1']
+DEBUG = True
+ALLOWED_HOSTS=[]
+# ALLOWED_HOSTS = ['https://mplaceproject.herokuapp.com/','localhost', '127.0.0.1']
 
 
 # Application definition
@@ -148,4 +148,4 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
